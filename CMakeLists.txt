@@ -7,4 +7,4 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
 # 指定源码文件
-add_executable(se-prototype src/main.cpp)
+add_executable(se-prototype src/main.cpp "sse_index.c" "sse_search.c")
