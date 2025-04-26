@@ -77,7 +77,24 @@ void serve_loop() {
             while (fgets(buf, MAXLINE, f)) {
                 if (strncmp(buf, td, n) == 0 && buf[n] == ' ') {
                     // buf+n+1 为以空格分隔的文档列表
-                    write(connfd, buf + n + 1, strlen(buf + n + 1));
+                    // 在 serve_loop() 里
+                    ssize_t nw = write(connfd, buf + n + 1, strlen(buf + n + 1));
+                    if (nw < 0) {
+                        perror("write to client failed");
+                        // 根据需要决定是跳出、continue 还是其他处理
+                    }
+
+                    // 在 do_search() 里
+                    ssize_t ns = write(sockfd, td, strlen(td));
+                    if (ns < 0) {
+                        perror("write trapdoor failed");
+                        exit(1);
+                    }
+                    ns = write(sockfd, "\n", 1);
+                    if (ns < 0) {
+                        perror("write newline failed");
+                        exit(1);
+                    }
                     break;
                 }
             }
