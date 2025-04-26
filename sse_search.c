@@ -85,12 +85,12 @@ void serve_loop() {
                     }
 
                     // дк do_search() Ря
-                    ssize_t ns = write(sockfd, td, strlen(td));
+                    ssize_t ns = write(socket, td, strlen(td));
                     if (ns < 0) {
                         perror("write trapdoor failed");
                         exit(1);
                     }
-                    ns = write(sockfd, "\n", 1);
+                    ns = write(socket, "\n", 1);
                     if (ns < 0) {
                         perror("write newline failed");
                         exit(1);
